@@ -1,0 +1,96 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azureUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure AD user UPN provided by CloudLabs."
+      }
+    },
+    "azurePassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure AD user password provided by CloudLabs."
+      }
+    },
+    "ODLID": {
+      "type": "string",
+      "metadata": {
+        "description": "On-demand lab identifier provided by CloudLabs."
+      }
+    },
+    "DeploymentID": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique deployment identifier provided by CloudLabs."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Included for canonical CloudLabs ARM compatibility; unused in this minimal stage."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Included for canonical CloudLabs ARM compatibility; unused in this minimal stage."
+      }
+    },
+    "trainerUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "Included for canonical CloudLabs ARM compatibility; unused in this minimal stage."
+      }
+    },
+    "trainerUserPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "Included for canonical CloudLabs ARM compatibility; unused in this minimal stage."
+      }
+    }
+  },
+  "variables": {
+    "scripturl": "",
+    "deploymentTagName": "CloudLabsDeployment",
+    "deploymentTagValue": "[parameters('DeploymentID')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/tags",
+      "apiVersion": "2021-04-01",
+      "name": "default",
+      "properties": {
+        "tags": {
+          "CloudLabs": "true",
+          "CloudLabsODLID": "[parameters('ODLID')]",
+          "CloudLabsDeployment": "[parameters('DeploymentID')]",
+          "LabScenario": "FabricIQ-Standalone-Minimal"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "deploymentId": {
+      "type": "string",
+      "value": "[parameters('DeploymentID')]"
+    },
+    "odlId": {
+      "type": "string",
+      "value": "[parameters('ODLID')]"
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "value": "[resourceGroup().name]"
+    },
+    "resourceGroupLocation": {
+      "type": "string",
+      "value": "[resourceGroup().location]"
+    },
+    "azureLabUser": {
+      "type": "string",
+      "value": "[parameters('azureUserName')]"
+    }
+  }
+}
